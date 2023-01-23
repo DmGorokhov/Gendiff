@@ -1,7 +1,7 @@
 import argparse
 
 
-def get_args():
+def get_files():
     parser = argparse.ArgumentParser(description='Compares two configuration '
                                      'files and shows a difference')
     parser.add_argument('first_file', type=str)
@@ -9,4 +9,5 @@ def get_args():
     parser.add_argument('-f', '--format', type=str, help='set format of output')
 
     args = parser.parse_args()
-    return args
+
+    return args.first_file, args.second_file
