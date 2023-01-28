@@ -2,13 +2,13 @@
 
 
 import gendiff.cli as cli
-import gendiff.comparator as comparator
+from gendiff.diff_builder import generate_diff
 
 
 def main():
     filepath_1, filepath_2 = cli.get_files()
-    result = comparator.generate_diff(filepath_1, filepath_2)
-    print(result)
+    diff_result = generate_diff(filepath_1, filepath_2)
+    print(diff_result)
 
 
 if __name__ == '__main__':
