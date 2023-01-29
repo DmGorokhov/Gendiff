@@ -9,8 +9,8 @@ def read(file_path):
     return result
 
 
-data1 = json.load(open('file1.json'))
-data2 = json.load(open('file2.json'))
+data1 = json.load(open('tests/fixtures/file1.json'))
+data2 = json.load(open('tests/fixtures/file2.json'))
 
 expected_diff = {'follow': 'deleted', 'host': 'unchanged', 
                  'proxy': 'deleted', 'timeout': 'changed', 
@@ -21,8 +21,8 @@ not_changed = {'follow': 'unchanged', 'host': 'unchanged',
 
 
 def test_read_file():
-    assert read_file('file1.json') == data1
-    assert read_file('file2.json') == data2
+    assert read_file('tests/fixtures/file1.json') == data1
+    assert read_file('tests/fixtures/file2.json') == data2
     
 
 def test_to_json_str():
