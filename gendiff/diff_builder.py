@@ -1,4 +1,5 @@
-from gendiff.comparator.diff_counter import read_file, get_diff, console_output
+from gendiff.comparator.diff_counter import get_diff, console_output
+from gendiff.comparator.data_parser import read_file
 
 
 def generate_diff(filepath_old, filepath_new):
