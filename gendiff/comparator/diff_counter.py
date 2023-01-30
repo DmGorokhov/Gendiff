@@ -1,10 +1,3 @@
-import json
-
-
-def read_file(filepath):
-    return json.load(open(filepath))
-
-
 def to_json_str(value):
     if isinstance(value, bool):
         return str(value).lower()

@@ -1,6 +1,6 @@
 import json
 
-from gendiff.comparator.diff_counter import read_file, get_diff, to_json_str, console_output
+from gendiff.comparator.diff_counter import get_diff, to_json_str, console_output
 
 
 def read(file_path):
@@ -18,11 +18,6 @@ expected_diff = {'follow': 'deleted', 'host': 'unchanged',
 
 not_changed = {'follow': 'unchanged', 'host': 'unchanged', 
                 'proxy': 'unchanged', 'timeout': 'unchanged'}
-
-
-def test_read_file():
-    assert read_file('tests/fixtures/file1.json') == data1
-    assert read_file('tests/fixtures/file2.json') == data2
     
 
 def test_to_json_str():
