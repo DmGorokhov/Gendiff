@@ -2,12 +2,12 @@
 
 
 import gendiff.cli as cli
-from gendiff.diff_builder import generate_diff
+import gendiff.diff_builder as diff_builder
 
 
 def main():
     filepath_1, filepath_2 = cli.get_files()
-    diff_result = generate_diff(filepath_1, filepath_2)
+    diff_result = diff_builder.generate_diff(filepath_1, filepath_2)
     print(diff_result)
 
 

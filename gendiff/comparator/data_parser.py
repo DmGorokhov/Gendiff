@@ -3,8 +3,9 @@ from yaml import safe_load
 
 
 def read_file(filepath):
-
     if filepath.endswith('.json'):
-        return json.load(open(filepath))
+        with open(filepath, 'r') as filedata:
+            data = json.load(filedata)
     else:
-        return safe_load(open(filepath))
+        data = safe_load(open(filepath))
+    return data
