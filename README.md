@@ -10,3 +10,5 @@
 [![asciicast](https://asciinema.org/a/553733.svg)](https://asciinema.org/a/553733)
 * Compare two plain *.yaml files
 [![asciicast](https://asciinema.org/a/555851.svg)](https://asciinema.org/a/555851)
+* Compare two nested files
+[![asciicast](https://asciinema.org/a/569167.svg)](https://asciinema.org/a/569167)
