@@ -35,6 +35,7 @@ def test_to_json_val():
     assert to_json_val(True) == 'true'
     assert to_json_val(None) == 'null'
     assert to_json_val('') == ''
+    assert to_json_val(0) == '0'
     assert to_json_val('How are you?') == 'How are you?'
     assert to_json_val(7) == '7'
 
@@ -52,8 +53,8 @@ def test_stringify_val_nested():
     assert stringify_val(nested_val) == expected_str
 
 def test_get_stylish():
-    expected_plain_output = read('tests/fixtures/plain_output.txt')
-    expected_nested_output = read('tests/fixtures/nested_output.txt')
+    expected_plain_output = read('tests/fixtures/stylish_plain_output.txt')
+    expected_nested_output = read('tests/fixtures/stylish_nested_output.txt')
     plain_diff = get_diff(data1_plain, data2_plain)
     nested_diff = get_diff(data1_nested, data2_nested)
     
