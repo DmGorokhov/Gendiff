@@ -12,3 +12,5 @@
 [![asciicast](https://asciinema.org/a/555851.svg)](https://asciinema.org/a/555851)
 * Compare two nested files
 [![asciicast](https://asciinema.org/a/569167.svg)](https://asciinema.org/a/569167)
+* Plain format of output
+[![asciicast](https://asciinema.org/a/569582.svg)](https://asciinema.org/a/569582)
