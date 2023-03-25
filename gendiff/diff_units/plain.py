@@ -1,3 +1,9 @@
+from gendiff.diff_units.data_comparator import (get_key_name, get_children,
+                                                get_value, get_old_value,
+                                                get_status, is_changed_key
+                                                )
+
+
 def to_plain_val(value):
     match value:
         case bool(value):
@@ -13,35 +19,30 @@ def to_plain_val(value):
 
 
 def get_plain(diff):
-    STATUS_TO_WORD = {'deleted': 'removed',
-                      'added': 'added',
-                      'changed': 'updated'
-                      }
 
-    def inner(diff, path):
-        lines = []
-        for key, key_diff in sorted(diff.items()):
-            current_path = f"{path}{key}"
-            key_status = key_diff.get('status')
-            line = (f"Property '{current_path}' was "
-                    f"{STATUS_TO_WORD.get(key_status)}")
+    def inner(key_diff, path=''):
+        key_name = get_key_name(key_diff)
+        key_status = get_status(key_diff)
+        nested_keys = get_children(key_diff)
 
-            if not key_diff.get('children'):
-                value = to_plain_val(key_diff.get('value'))
+        current_path = f"{path}{key_name}"
+        if not nested_keys:
+            line = (f"Property '{current_path}' was {key_status}")
+            value = to_plain_val(get_value(key_diff))
+            match key_status:
+                case 'added':
+                    line += f" with value: {value}"
+                case 'updated':
+                    old_value = to_plain_val(get_old_value(key_diff))
+                    line += f". From {old_value} to {value}"
+            return line
 
-                match key_status:
-                    case 'deleted':
-                        lines.append(line)
-                    case 'added':
-                        line += f" with value: {value}"
-                        lines.append(line)
-                    case 'changed':
-                        old_value = to_plain_val(key_diff.get('old_value'))
-                        line += f". From {old_value} to {value}"
-                        lines.append(line)
-            else:
-                children = key_diff.get('children')
-                lines.append(inner(children, current_path + '.'))
-        return '\n'.join(lines)
+        current_path += '.'
+        changed_keys = filter(is_changed_key, nested_keys)
 
-    return inner(diff, '')
+        lines = map(lambda key: inner(key, current_path), changed_keys)
+        result = '\n'.join(lines)
+        return result
+
+    plain_diff = '\n'.join(map(inner, diff))
+    return plain_diff

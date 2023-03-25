@@ -1,6 +1,6 @@
 from gendiff.diff_units.data_comparator import get_diff
 from gendiff.diff_units.data_parser import read_file
-import gendiff.diff_units.stylish as stylish
+from gendiff.diff_units.stylish import get_stylish
 from gendiff.diff_units.plain import get_plain
 
 
@@ -11,7 +11,7 @@ def generate_diff(filepath_old, filepath_new, format='stylish'):
     diff = get_diff(old_data, new_data)
     match format:
         case 'stylish':
-            diff_report = stylish.get_stylish(diff)
+            diff_report = get_stylish(diff)
             return diff_report
         case 'plain':
             diff_report = get_plain(diff)

@@ -1,60 +1,65 @@
 from itertools import chain
+from gendiff.diff_units.data_comparator import (get_key_name, get_children,
+                                                get_value, get_old_value,
+                                                get_status
+                                                )
 
 
-STATUS_SIGNS = {'deleted': '- ',
-                'added': '+ ',
-                'unchanged': '  ',
-                'changed': '+ '
+STATUS_SIGNS = {'removed': '- ', 'added': '+ ',
+                'unchanged': '  ', 'updated': '+ '
                 }
 REPLACER = ' '
 IDENT_STEP = 4
 BACKSPACE_STEP = 2
 
 
-def to_json_val(value):
-    if isinstance(value, bool):
-        return str(value).lower()
-    elif value is None:
-        return 'null'
-    else:
-        return str(value)
-
-
-def stringify_val(value, depth=0):
-    if not isinstance(value, dict):
-        return to_json_val(value)
-    items = []
-    for key, val in value.items():
-        key_ident = IDENT_STEP * REPLACER * (depth + 1)
-        items.append(f'{key_ident}{key}: {stringify_val(val, depth+1)}')
-
-    brace_outset = IDENT_STEP * REPLACER * depth
-    result_str = chain("{", items, [brace_outset + "}"])
-    return '\n'.join(result_str)
+def to_stylish_val(value, depth=0):
+    match value:
+        case bool(value):
+            return str(value).lower()
+        case None:
+            return 'null'
+        case dict(value):
+            items = []
+            for key, val in value.items():
+                key_ident = IDENT_STEP * REPLACER * (depth + 1)
+                items.append(f'{key_ident}{key}: '
+                             f'{to_stylish_val(val, depth+1)}')
+            brace_outset = IDENT_STEP * REPLACER * depth
+            stylish_str = chain("{", items, [brace_outset + "}"])
+            return '\n'.join(stylish_str)
+    return str(value)
 
 
 def get_stylish(diff):
 
-    def inner(diff, depth):
-        lines = []
+    def inner(key_diff, depth=1):
+        key_name = get_key_name(key_diff)
+        key_status = get_status(key_diff)
+        nested_keys = get_children(key_diff)
+
         ident = (IDENT_STEP * depth - BACKSPACE_STEP) * REPLACER
-        for key, key_diff in sorted(diff.items()):
-            key_status = key_diff.get('status')
-            output_key = f'{ident}{STATUS_SIGNS.get(key_status)}{key}'
+        stylish_status = STATUS_SIGNS.get(key_status)
 
-            if not key_diff.get('children'):
-                if key_status == 'changed':
-                    old_output_key = f'{ident}- {key}'
-                    old_value = stringify_val(key_diff.get('old_value'), depth)
-                    lines.append(f'{old_output_key}: {old_value}')
-                value = stringify_val(key_diff.get('value'), depth)
-                lines.append(f'{output_key}: {value}')
-            else:
-                children = key_diff.get('children')
-                lines.append(f'{output_key}: {inner(children, depth+1)}')
+        stylish_key = f'{ident}{stylish_status}{key_name}: '
 
-        bottom_outset = (IDENT_STEP * depth - IDENT_STEP) * REPLACER
-        result = chain("{", lines, [bottom_outset + "}"])
-        return '\n'.join(result)
+        if not nested_keys:
+            line = ''
+            if key_status == 'updated':
+                line += f'{ident}- {key_name}: '
+                old_value = get_old_value(key_diff)
+                line += to_stylish_val(old_value, depth) + '\n'
+            value = get_value(key_diff)
+            line += f'{stylish_key}{to_stylish_val(value, depth)}'
+            return line
 
-    return inner(diff, 1)
+        depth += 1
+        nested_lines = '\n'.join(map(lambda key:
+                                     inner(key, depth), nested_keys))
+        bottom_outset = (IDENT_STEP * depth - IDENT_STEP) * REPLACER + '}'
+        result = '\n'.join((stylish_key + '{', nested_lines, bottom_outset))
+        return result
+
+    stylish_diff = '\n'.join(map(inner, diff))
+
+    return '\n'.join(("{", stylish_diff, "}"))
