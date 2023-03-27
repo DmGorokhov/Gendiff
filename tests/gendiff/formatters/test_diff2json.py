@@ -1,12 +1,9 @@
 import json
 
-from gendiff.diff_units.diff2json import get_json
+from gendiff.formatters.diff2json import get_json
 from gendiff.diff_units.data_comparator import get_diff
+from gendiff.diff_units.data_parser import read_file
 
-def read_file(filepath):
-    with open(filepath, 'r') as filedata:
-        data = json.load(filedata)
-    return data
 
 data1 = read_file('tests/fixtures/file1.json')
 data2 = read_file('tests/fixtures/file2.json')
@@ -14,9 +11,9 @@ data1_nested = read_file('tests/fixtures/file1_nested.json')
 data2_nested = read_file('tests/fixtures/file2_nested.json')
 
 
-
 expected_json_plain = read_file('tests/fixtures/plain_diff.json')
 expected_json_nested = read_file('tests/fixtures/nested_diff.json')
+
 
 def test_get_json():
     diff_plain = get_diff(data1, data2)

@@ -1,4 +1,4 @@
-from gendiff.diff_units.stylish import to_stylish_val, get_stylish
+from gendiff.formatters.stylish import to_stylish_val, get_stylish
 from gendiff.diff_units.data_comparator import get_diff
 from gendiff.diff_units.data_parser import read_file
 
@@ -40,15 +40,17 @@ def test_to_stylish_val_primirives():
     assert to_stylish_val('How are you?') == 'How are you?'
     assert to_stylish_val(7) == '7'
 
+
 def test_to_stylish_val_nested():
     expected_str = read('tests/fixtures/stringify_nested_output.txt')
     assert to_stylish_val(nested_val) == expected_str
+
 
 def test_get_stylish():
     expected_plain_output = read('tests/fixtures/stylish_plain_output.txt')
     expected_nested_output = read('tests/fixtures/stylish_nested_output.txt')
     plain_diff = get_diff(data1_plain, data2_plain)
     nested_diff = get_diff(data1_nested, data2_nested)
-    
+
     assert get_stylish(plain_diff) == expected_plain_output
-    assert get_stylish(nested_diff) == expected_nested_output 
+    assert get_stylish(nested_diff) == expected_nested_output

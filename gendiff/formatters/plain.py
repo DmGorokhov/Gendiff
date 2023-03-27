@@ -14,8 +14,10 @@ def to_plain_val(value):
             return 'null'
         case '':
             return "''"
-        case _:
+        case str(value):
             return f"'{value}'"
+        case _:
+            return f"{value}"
 
 
 def get_plain(diff):
