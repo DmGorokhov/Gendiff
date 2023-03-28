@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "hexlet-code"
 version = "0.1.0"
-description = ""
+description = "The semantic JSON and YAML compare tool"
 authors = ["Dmitry Gorokhov <gorokhov86@gmail.com>"]
 readme = "README.md"
 packages = [{include = "gendiff"}]

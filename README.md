@@ -27,6 +27,7 @@ python3 -m pip install --user git+https://github.com/DmGorokhov/python-project-5
 git clone https://github.com/DmGorokhov/python-project-50.git
 Make install          # install poetry for dependency management and packaging
 Make build            # create package in dist/
+Make package-install  # install package
 ```
 
 ### Usage examples:
