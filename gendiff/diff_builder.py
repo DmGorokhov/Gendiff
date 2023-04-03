@@ -2,7 +2,7 @@ from gendiff.diff_units.data_comparator import get_diff
 from gendiff.diff_units.data_parser import read_file
 from gendiff.formatters.stylish import get_stylish
 from gendiff.formatters.plain import get_plain
-from gendiff.formatters.diff2json import get_json
+from gendiff.formatters.json import get_json
 
 
 def generate_diff(filepath_old, filepath_new, format='stylish'):

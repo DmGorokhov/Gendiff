@@ -1,7 +1,7 @@
 import argparse
 
 
-def get_files():
+def parse_args(argv=None):
     parser = argparse.ArgumentParser(description='Compares two configuration '
                                      'files and shows a difference')
     parser.add_argument('first_file', type=str)
@@ -10,6 +10,6 @@ def get_files():
                         help='set format of output(default: "stylish")',
                         default='stylish')
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     return args.first_file, args.second_file, args.format
