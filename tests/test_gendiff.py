@@ -184,4 +184,6 @@ gendiff_cases = [('file1.json', 'file2.json', 'stylish',
 
 @pytest.mark.parametrize('file1, file2, format, result', gendiff_cases)
 def test_generate_diff(file1, file2, format, result):
-    assert generate_diff(file1, file2, format) == result
+    file_path_1 = get_fixture_path(file1)
+    file_path_2 = get_fixture_path(file2)
+    assert generate_diff(file_path_1, file_path_2, format) == result
