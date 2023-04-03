@@ -1,0 +1,4 @@
+[('follow', ['unchanged', None, False, None]), 
+('host', ['unchanged', None, 'hexlet.io', None]), 
+('proxy', ['unchanged', None, '123.234.53.22', None]), 
+('timeout', ['unchanged', None, 50, None])]

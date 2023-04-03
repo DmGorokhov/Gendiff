@@ -1,1 +1,5 @@
-{'follow': 'deleted', 'host': 'unchanged', 'proxy': 'deleted', 'timeout': 'changed', 'verbose': 'added'}
+[('follow', ['removed', False, None, None]), 
+('host', ['unchanged', None, 'hexlet.io', None]), 
+('proxy', ['removed', '123.234.53.22', None, None]), 
+('timeout', ['updated', 50, 20, None]), 
+('verbose', ['added', None, True, None])]
