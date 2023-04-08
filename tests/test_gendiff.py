@@ -187,3 +187,11 @@ def test_generate_diff(file1, file2, format, result):
     file_path_1 = get_fixture_path(file1)
     file_path_2 = get_fixture_path(file2)
     assert generate_diff(file_path_1, file_path_2, format) == result
+
+
+def test_generate_diff_wrong_format():
+    file_path_1 = get_fixture_path('file1.json')
+    file_path_2 = get_fixture_path('file2.json')
+    with pytest.raises(Exception) as exeption:
+        generate_diff(file_path_1, file_path_2, 'another format')
+    assert str(exeption.value) == 'Unknown or unsupported output format'

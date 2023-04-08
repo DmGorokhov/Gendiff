@@ -17,4 +17,6 @@ def generate_diff(filepath_old, filepath_new, format='stylish'):
             diff_report = get_plain(diff)
         case 'json':
             diff_report = get_json(diff)
+        case _:
+            raise Exception('Unknown or unsupported output format')
     return diff_report
