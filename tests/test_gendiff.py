@@ -5,7 +5,7 @@ import tests.fixtures.py_fixtures as py_fixtures
 
 
 from gendiff.cli import parse_args
-from gendiff.diff_units.data_parser import read_file
+from gendiff.diff_units.data_parser import read_file, get_format
 from gendiff.diff_units.data_comparator import (get_diff, get_key_name,
                                                 get_children, get_value,
                                                 get_old_value, get_status,
@@ -50,6 +50,15 @@ def test_parse_args():
 
     assert args1 == ('file1', 'file2', 'plain')
     assert args2 == ('file3', 'file4', 'stylish')
+
+
+@pytest.mark.parametrize('filepath, format',
+                         [('some_file.json', 'json'),
+                          ('some_file.yaml', 'yaml'),
+                          ('some_file.yml', 'yaml'),
+                          ('some_file.txt', 'other format')])
+def test_get_format(filepath, format):
+    assert get_format(filepath) == format
 
 
 data_pasred_cases = [
