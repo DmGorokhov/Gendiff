@@ -13,7 +13,7 @@ Gendiff is cli-utility for comparing two files JSON or YAML formats. Also it can
 * Python >= 3.10
 * Poetry 1.2.2
 * Pyyaml >= 6.0
-* Make (is used to run a game through console-command)
+* Make (is used to run utility through console-command)
 
 ### How to install:
 ---
